@@ -5,7 +5,7 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 
 VER=1.0
 
-outputDir="${DIR}/output"
+outputDir="${DIR}/outputs"
 force=
 exec=
 while getopts ":ho:fe:" opt; do
@@ -15,7 +15,7 @@ while getopts ":ho:fe:" opt; do
         echo -e "Decompile android bin file into readable source files. \n"
         echo "Usage:"
         echo "crack.sh [OPTIONS] [ARGS...] [TARGET]"
-        echo "    -o OUTPUT_DIR     specify dir to store decompiled file, 'SCRIPTS_DIR/output' will be used if not specified."
+        echo "    -o OUTPUT_DIR     specify dir to store decompiled file, 'SCRIPTS_DIR/outputs' will be used if not specified."
         echo "    -f                force to re-decompile target file. Cached result will be presented if this option is not used, if there is any."
         echo "    -e EXEC           run '\$exec RESULT_DIR' after decompiling finished. You can use tools like VSCode or Atom to view the result."
         echo -e "\nTARGET could be one of below:"
