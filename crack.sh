@@ -21,7 +21,7 @@ while getopts ":ho:fe:" opt; do
         echo -e "\nTARGET could be one of below:"
         echo -e "\n    apk, aar, jar, dex, directory\n"
         echo "If target file has other ext names or has no ext name, then it will be treated as an apk file."
-        echo "If target is directory, then it will recursively process all file with accepted ext name, and ignore files which have no ext name."
+        echo "If target is directory, then it will recursively process all files with accepted ext name, and ignore files which have no ext name."
         exit 0
         ;;
     o)
