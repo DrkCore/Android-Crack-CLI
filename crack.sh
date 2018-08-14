@@ -8,7 +8,8 @@ VER=1.0
 outputDir="${DIR}/outputs"
 force=
 exec=
-while getopts ":ho:fe:" opt; do
+runnablePattern=
+while getopts ":ho:fe:i:" opt; do
     case ${opt} in
     h)
         echo -e "Android-Cracker-CLI v${VER}, fork me in https://github.com/DrkCore/Android-Cracker-CLI, star me if you like it!\n"
@@ -18,6 +19,7 @@ while getopts ":ho:fe:" opt; do
         echo "    -o OUTPUT_DIR     specify dir to store decompiled file, 'SCRIPTS_DIR/outputs' will be used if not specified."
         echo "    -f                force to re-decompile target file. Cached result will be presented if this option is not used, if there is any."
         echo "    -e EXEC           run '\$exec RESULT_DIR' after decompiling finished. You can use tools like VSCode or Atom to view the result."
+        echo "    -i PATTERN        find files matched pattern and crack them if there are any runnable bin in your apk."
         echo -e "\nTARGET could be one of below:"
         echo -e "\n    apk, aar, jar, dex, directory\n"
         echo "If target file has other ext names or has no ext name, then it will be treated as an apk file."
@@ -32,6 +34,9 @@ while getopts ":ho:fe:" opt; do
         ;;
     e)
         exec=${OPTARG}
+        ;;
+    i)
+        runnablePattern=${OPTARG}
         ;;
     \?)
         echo "Invalid option: -${OPTARG}"
@@ -189,6 +194,13 @@ function processApk(){
     do
         processDex ${line} ${workDir}
     done
+
+    if [ -n "$runnablePattern" ]; then
+        find ${apkExtractDir} -name "${runnablePattern}" | while read line
+        do
+            processApk ${line} ${workDir}
+        done
+    fi
 }
 
 if [ ! -n "${target}" ]; then
